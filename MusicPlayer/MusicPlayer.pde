@@ -17,6 +17,20 @@ void setup() {
 }//End Void Setup
 
 void draw() {
+{ 
+  background(0);
+  
+  stroke(255);
+  
+  for(int i = 0; i < groove.bufferSize() - 1; i++)
+{
+  line(i, 50 + groove.left.get(i)*50, i+1, 50 + groove.left.get(i+1)*50);
+  line(i, 50 + groove.right.get(i)*50, i+1, 50 + groove.right.get(i+1)*50);
+}
+text("The player has" + groove.loopCount() + " loops left. "
++ " Is playing: " + groove.isPlaying()
++", Is playing: " + groove
+  
 }// End Void Draw
 
 void keyPressed() {
@@ -44,4 +58,5 @@ void keyPressed() {
 
   if (key == 'f' || key == 'F') song1.skip(1000);
   if (key == 'r' || key == 'R') song1.skip(-1000);
+  if ( key == 'l' || key == 'L' ) song1.loop();
 }
