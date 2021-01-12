@@ -12,11 +12,14 @@ AudioPlayer[] song = new AudioPlayer[numberOfSongs];
 AudioMetaData[] songMetaData = new AudioMetaData[numberOfSongs];
 int loopIntNum = 1;
 int currentSong = numberOfSongs - numberOfSongs; 
+color purple = #D614F5, black = #050505;
+
+PFont titleFont;
 
 void setup() {
   size(500, 600);
   minim = new Minim(this);
-  song[currentSong] = minim.loadFile("/Music/MirrorMind");
+  song[currentSong] = minim.loadFile("../Music/MirrorMind");
   song[currentSong+=1] = minim.loadFile("/Music/Prism - Bobby Richards");
   song[currentSong+=1] = minim.loadFile("/Music/Simple - Patrick Patrikios");
   //
@@ -51,19 +54,13 @@ void setup() {
 }//End Void Setup
 
 void draw() {
-  //{ 
-   background(0);
-
-  // stroke(255);
-
-  //for (int i = 0; i < groove.bufferSize() - 1; i++)
-  // {
-  // line(i, 50 + groove.left.get(i)*50, i+1, 50 + groove.left.get(i+1)*50);
-  // line(i, 50 + groove.right.get(i)*50, i+1, 50 + groove.right.get(i+1)*50);
-  //  }
-  // text("The player has" + groove.loopCount() + " loops left. "
-  //+ " Is playing: " + groove.isPlaying()
-  // +", Is playing: " + groove.
+  background (black);
+  rect(width*1/4, height*0, width*1/2, height*1/10);
+  fill(purple); 
+  textAlign (CENTER, CENTER); 
+  textFont(titleFont, 25); 
+  text(songMetaData[currentSong].title(), width*1/4, height*0, width*1/2, height*1/10);
+  fill(255);
 }// End Void Draw
 
 void keyPressed() {
@@ -95,21 +92,40 @@ void keyPressed() {
   //Next Button:
   if (key == 'n' || key == 'N' ) {
     if ( song[currentSong].isPlaying() ) {
-    song[currentSong].isPlaying();
-    song[currentSong].pause();
-    song[currentSong].rewind();
-    song[currentSong].play();
+      song[currentSong].pause();
+      song[currentSong].rewind();
+      if ( currentSong == numberOfSongs-1 ) {
+        currentSong = numberOfSongs - numberOfSongs;
+      } else {
+        currentSong++;
+      }
+      song[currentSong].play();
     } else {
       song[currentSong].rewind();
-      currentSong++;
-    }
-  }//End Next Button
-  //Prevoius Button
+      if ( currentSong == numberOfSongs-1 ) {
+        currentSong = numberOfSongs - numberOfSongs;
+      } else {
+        currentSong++;
+      }
+    }//End Next Button
+  } //Prevoius Button
   if (key == 'b' || key == 'B') {
     if ( song[currentSong].isPlaying() ) {
+      song[currentSong].pause();
+      song[currentSong].rewind();
+      if ( currentSong == numberOfSongs-numberOfSongs ) {
+        currentSong = numberOfSongs -1;
+      } else {
+        currentSong--;
+      }
+      song[currentSong].play();
     } else {
-      currentSong++;
-    }
-    currentSong--;
-  }//End Prevoius Button
+      song[currentSong].rewind();
+      if ( currentSong == numberOfSongs-1 ) {
+        currentSong = numberOfSongs - numberOfSongs;
+      } else {
+        currentSong--;
+      }
+    }//End Prevoius Button
+  }
 }
